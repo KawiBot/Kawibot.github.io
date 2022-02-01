@@ -90,103 +90,6 @@ img {
     border-bottom: 3px solid $main-color;
   }
 }
-
-// Home Sections
-#home {
-  // Home Section A
-  &-a {
-    .specials {
-      margin-top: 3rem;
-      display: grid;
-      grid-gap: 1rem;
-      grid-template-columns: repeat(4, 1fr);
-
-      .fas {
-        color: $main-color;
-        padding-bottom: 0.4rem;
-      }
-    }
-  }
-  // Home Section B: Stats
-  &-b {
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-
-      li {
-        line-height: 2;
-
-        &.stats-title {
-          font-size: 1.5rem;
-        }
-
-        &.stats-number {
-          font-size: 2rem;
-          font-weight: bold;
-        }
-      }
-
-      div {
-        padding: 3rem 0;
-
-        &:nth-child(odd) {
-          background: $light-color;
-        }
-
-        &:nth-child(even) {
-          background: $medium-color;
-        }
-      }
-    }
-  }
-  // Home Section C
-  &-c {
-    .process {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-gap: 1.5rem;
-      text-align: center;
-
-      &-step {
-        position: absolute;
-        top: 0;
-        right: 0;
-        font-size: 28px;
-        background: $main-color;
-        border-radius: 50%;
-        height: 15px;
-        width: 15px;
-        line-height: 15px;
-        padding: 1rem;
-        transition: all 1s;
-      }
-      &-icon {
-        border-radius: 50%;
-        background: $dark-color;
-        color: #fff;
-        padding: 2rem;
-        width: 70px;
-        height: 70px;
-        line-height: 70px;
-        text-align: center;
-        position: relative;
-        transition: all 1s;
-
-        &:hover {
-          background: $main-color;
-          width: 90px;
-          height: 90px;
-          line-height: 90px;
-
-          .process-step {
-            background: $dark-color;
-          }
-        }
-      }
-    }
-  }
-}
-
 // About Section
 #about {
   &-a {
@@ -194,7 +97,8 @@ img {
       display: grid;
       grid-template-areas:
         "bioimage bio bio"
-        "aw1 aw2 aw3";
+        "skilltitle" "skilltitle" "skilltitle"
+        "skill1 skill2 skill3";
       grid-gap: 1.2rem;
     }
     // Grid Areas
@@ -206,18 +110,21 @@ img {
       border-left: 3px solid $main-color;
       padding: 0.8rem;
     }
-    .award-1 {
-      grid-area: aw1;
+    .skill-title {
+      grid-area: skilltitle;
     }
-    .award-2 {
-      grid-area: aw2;
+    .skill-1 {
+      grid-area: skill1;
     }
-    .award-3 {
-      grid-area: aw3;
+    .skill-2 {
+      grid-area: skill2;
     }
-    .award-1 .fas,
-    .award-2 .fas,
-    .award-3 .fas {
+    .skill-3 {
+      grid-area: skill3;
+    }
+    .skill-1 .fab,
+    .skill-2 .fab,
+    .skill-3 .fab {
       color: $main-color;
       margin: 1rem;
     }
