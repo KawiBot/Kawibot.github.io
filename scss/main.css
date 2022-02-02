@@ -521,6 +521,11 @@ img {
   padding: 0.5rem;
 }
 
+#main-footer .footer-content .social .fab .fly {
+  width: 20px;
+  height: 20px;
+}
+
 #main-footer .footer-content .social .fab:hover {
   background: #e93737;
 }
