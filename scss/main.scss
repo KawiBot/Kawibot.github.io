@@ -97,7 +97,6 @@ img {
       display: grid;
       grid-template-areas:
         "bioimage bio bio"
-        "skilltitle" "skilltitle" "skilltitle"
         "skill1 skill2 skill3";
       grid-gap: 1.2rem;
     }
@@ -109,9 +108,6 @@ img {
       grid-area: bio;
       border-left: 3px solid $main-color;
       padding: 0.8rem;
-    }
-    .skill-title {
-      grid-area: skilltitle;
     }
     .skill-1 {
       grid-area: skill1;

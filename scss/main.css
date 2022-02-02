@@ -161,7 +161,6 @@ input[class^="btn-"]:hover {
 
 .item-image {
   height: auto;
-  width: 1000px;
   -webkit-transform: translateZ(0);
           transform: translateZ(0);
   display: block;
@@ -328,7 +327,7 @@ img {
 #about-a .about-info {
   display: -ms-grid;
   display: grid;
-      grid-template-areas: "bioimage bio bio" "skilltitle" "skilltitle" "skilltitle" "skill1 skill2 skill3";
+      grid-template-areas: "bioimage bio bio" "skill1 skill2 skill3";
   grid-gap: 1.2rem;
 }
 
@@ -347,27 +346,20 @@ img {
   padding: 0.8rem;
 }
 
-#about-a .skill-title {
-  -ms-grid-row: 2;
-  -ms-grid-row-span: 3;
-  -ms-grid-column: 1;
-  grid-area: skilltitle;
-}
-
 #about-a .skill-1 {
-  -ms-grid-row: 5;
+  -ms-grid-row: 2;
   -ms-grid-column: 1;
   grid-area: skill1;
 }
 
 #about-a .skill-2 {
-  -ms-grid-row: 5;
+  -ms-grid-row: 2;
   -ms-grid-column: 2;
   grid-area: skill2;
 }
 
 #about-a .skill-3 {
-  -ms-grid-row: 5;
+  -ms-grid-row: 2;
   -ms-grid-column: 3;
   grid-area: skill3;
 }
