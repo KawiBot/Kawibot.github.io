@@ -36,7 +36,7 @@
   }
 
   &-image {
-    height: auto; 
+    height: auto;
     transform: translateZ(0);
     display: block;
     transition: transform 750ms cubic-bezier(0.2, 1, 0.3, 1);
@@ -89,3 +89,4 @@
     margin: 0;
   }
 }
+  

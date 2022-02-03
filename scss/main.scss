@@ -1,6 +1,6 @@
-@import "config";
-@import "util";
-@import "item_grid";
+@import "./config";
+@import "./util";
+@import "./item_grid";
 // General Styles
 * {
   margin: 0;
@@ -63,7 +63,7 @@ img {
   &-home {
     height: 100vh;
     color: #fff;
-    background: url(../img/showcase1.jpg) no-repeat center center/cover;
+    background: url("../dist/img/showcase1.jpg") no-repeat center center/cover;
     .header-content {
       text-align: center;
       padding-top: 20%;
@@ -85,19 +85,18 @@ img {
   //   opacity: 0.4;
   // }
   &-inner {
-    background: url(../img/showcase1.jpg) no-repeat 20% 45% / cover;
+    background: url("../dist/img/showcase1.jpg") no-repeat 20% 45% / cover;
     height: 5.5rem;
     border-bottom: 3px solid $main-color;
   }
 }
+
 // About Section
 #about {
   &-a {
     .about-info {
       display: grid;
-      grid-template-areas:
-        "bioimage bio bio"
-        "skill1 skill2 skill3";
+      grid-template-areas: "bioimage bio bio";
       grid-gap: 1.2rem;
     }
     // Grid Areas
@@ -108,21 +107,6 @@ img {
       grid-area: bio;
       border-left: 3px solid $main-color;
       padding: 0.8rem;
-    }
-    .skill-1 {
-      grid-area: skill1;
-    }
-    .skill-2 {
-      grid-area: skill2;
-    }
-    .skill-3 {
-      grid-area: skill3;
-    }
-    .skill-1 .fab,
-    .skill-2 .fab,
-    .skill-3 .fab {
-      color: $main-color;
-      margin: 1rem;
     }
   }
   // About B
@@ -139,45 +123,6 @@ img {
         color: #fff;
         text-align: center;
         background: $main-color;
-      }
-    }
-  }
-  // About C
-  &-c {
-    .about-logos {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-gap: 2rem;
-
-      img {
-        width: 70%;
-      }
-    }
-  }
-  // About D
-  &-d {
-    .testimonials {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-gap: 0.5rem;
-
-      ul {
-        list-style: none;
-        margin-top: 1rem;
-        display: flex;
-        align-items: center;
-      }
-      p {
-        border: 1px solid $medium-color;
-        border-radius: 5px;
-        padding: 0.5rem;
-      }
-
-      img {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        margin-right: 0.5rem;
       }
     }
   }
@@ -254,15 +199,18 @@ img {
       line-height: 20px;
       text-align: center;
       padding: 0.5rem;
-      .fly {
-        width: 20px;
-        height: 20px;
-      }
+
       &:hover {
         background: $main-color;
       }
     }
   }
+  .fly {
+    position: absolute;
+    top: 2920px;
+    width: 20px;
+    transform: rotate(180deg);
+  }
 }
 
-@import "media";
+@import "./media";

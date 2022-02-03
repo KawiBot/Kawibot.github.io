@@ -1,3 +1,8 @@
+@media (max-width: 1279.99px) {
+  .fly {
+    display: none;
+  }
+}
 // Tablets And Smaller
 @media (max-width: 800px) {
   #header-home {
@@ -5,6 +10,9 @@
     .header-content {
       padding-top: 5rem;
     }
+  }
+  .fly {
+    display: none;
   }
 }
 
