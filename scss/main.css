@@ -350,6 +350,10 @@ img {
   padding: 0.8rem;
 }
 
+#about-a .bio span {
+  font-weight: bold;
+}
+
 #about-b .progress {
   overflow: hidden;
   height: 20px;

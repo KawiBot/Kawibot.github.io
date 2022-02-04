@@ -107,6 +107,9 @@ img {
       grid-area: bio;
       border-left: 3px solid $main-color;
       padding: 0.8rem;
+      span {
+        font-weight: bold;
+      }
     }
   }
   // About B
