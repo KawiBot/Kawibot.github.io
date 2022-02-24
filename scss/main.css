@@ -308,7 +308,7 @@ img {
 #header-home {
   height: 100vh;
   color: #fff;
-  background: url("../dist/img/showcase1.jpg") no-repeat center center/cover;
+  background-color: #333333;
 }
 
 #header-home .header-content {
@@ -323,7 +323,6 @@ img {
 }
 
 #header-inner {
-  background: url("../dist/img/showcase1.jpg") no-repeat 20% 45%/cover;
   height: 5.5rem;
   border-bottom: 3px solid #37bae9;
 }
@@ -352,6 +351,14 @@ img {
 
 #about-a .bio span {
   font-weight: bold;
+}
+
+#about-a .certificates {
+  padding-bottom: 20px;
+}
+
+#about-a .certificates img {
+  width: 400px;
 }
 
 #about-b .progress {
