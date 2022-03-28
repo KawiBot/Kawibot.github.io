@@ -22,12 +22,23 @@ body {
     padding-top: 10px;
   }
   .container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 25vh;
+    color: #fff;
+    text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: 440px;
+    width: 100%;
+    text-align: center;
+    z-index: 100;
+    display: block;
     .about {
-      padding-right: 500px;
+      position: absolute;
+      top: 10px;
+      left: 435px;
+    }
+    .work {
+      position: absolute;
+      top: 10px;
+      right: 470px;
     }
   }
   .webgl {

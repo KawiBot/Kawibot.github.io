@@ -2,7 +2,6 @@ body {
   cursor: none;
   .cursor {
     pointer-events: none;
-
     &__ball {
       position: fixed;
       top: 0;
@@ -12,6 +11,11 @@ body {
 
       circle {
         fill: #f7f8fa;
+      }
+    }
+    &__ball--small {
+      circle {
+        fill: rgb(0, 0, 0);
       }
     }
   }

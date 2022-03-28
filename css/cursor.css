@@ -17,4 +17,8 @@ body .cursor__ball {
 body .cursor__ball circle {
   fill: #f7f8fa;
 }
+
+body .cursor__ball--small circle {
+  fill: black;
+}
 /*# sourceMappingURL=cursor.css.map */

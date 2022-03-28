@@ -1,19 +1,20 @@
 import "./css/cursor.min.css"
 import "./css/style.min.css"
-
-
-import "./cursor"
-
-
+import gsap from "gsap"
 import * as THREE from "three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js"
+import { TextureLoader } from "three/examples/jsm/loaders/BasisTextureLoader"
 import * as dat from "dat.gui"
 // Debug
 const gui = new dat.GUI()
 
 // Canvas
 const canvas = document.querySelector(".webgl")
+// const ctx = canvas.getContext("2d")
+// ctx.fillStyle = "green"
+// ctx.fillRect(10, 10, 150, 100)
 
+const container = document.querySelector(".container")
 // Scene
 const scene = new THREE.Scene()
 
@@ -149,3 +150,29 @@ const tick = () => {
 }
 
 tick()
+
+// Circle cursor
+const $bigBall = document.querySelector(".cursor__ball--big")
+const $smallBall = document.querySelector(".cursor__ball--small")
+const $hoverables = document.querySelectorAll(".hoverable")
+
+// Listeners
+document.body.addEventListener("mousemove", onMouseMove)
+for (let i = 0; i < $hoverables.length; i++) {
+  $hoverables[i].addEventListener("mouseenter", onMouseHover)
+  $hoverables[i].addEventListener("mouseleave", onMouseHoverOut)
+}
+
+// Move the cursor
+function onMouseMove(e) {
+  gsap.to($bigBall, { duration: 0.17, x: e.pageX - 15, y: e.pageY - 15 })
+  gsap.to($smallBall, { duration: 0.1, x: e.pageX - 5, y: e.pageY - 7 })
+}
+
+// Hover an element
+function onMouseHover() {
+  gsap.to($bigBall, { duration: 0.3, scale: 4 })
+}
+function onMouseHoverOut() {
+  gsap.to($bigBall, { duration: 0.3, scale: 1 })
+}
