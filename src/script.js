@@ -67,19 +67,47 @@ const textTexture = textureLoader.load("/matcaps/3.png")
 // scene.add(plane)
 // gui.add(plane.rotation, "x").min(0).max(15).step(0.1)
 
+// const object1 = new THREE.Mesh(
+//   new THREE.BoxGeometry(0.25, 0.25),
+//   new THREE.MeshBasicMaterial({ color: "#ff0000" })
+// )
+// object1.position.x = -2
+
+// const object2 = new THREE.Mesh(
+//   new THREE.SphereGeometry(0.5, 16, 16),
+//   new THREE.MeshBasicMaterial({ color: "#ff0000" })
+// )
+
+// const object3 = new THREE.Mesh(
+//   new THREE.SphereGeometry(0.5, 16, 16),
+//   new THREE.MeshBasicMaterial({ color: "#ff0000" })
+// )
+// object3.position.x = 2
+
+// scene.add(object1, object2, object3)
+
+// /**
+//  * Raycaster
+//  */
+// const raycaster = new THREE.Raycaster()
+// let currentIntersect = null
+// const rayOrigin = new THREE.Vector3(-3, 0, 0)
+// const rayDirection = new THREE.Vector3(10, 0, 0)
+// rayDirection.normalize()
+
 /**
  * Particles
  */
 // Geometry
 const particleTexture = textureLoader.load("/particles/9.png")
 const particlesGeometry = new THREE.BufferGeometry()
-const count = 5000
+const count = 10000
 
 const positions = new Float32Array(count * 3)
 const colors = new Float32Array(count * 3)
 
 for (let i = 0; i < count * 3; i++) {
-  positions[i] = (Math.random() - 0.5) * 30
+  positions[i] = (Math.random() - 0.5) * 10
   colors[i] = Math.random()
 }
 
@@ -92,7 +120,7 @@ particlesGeometry.setAttribute("color", new THREE.BufferAttribute(colors, 3))
 // Material
 const particlesMaterial = new THREE.PointsMaterial()
 
-particlesMaterial.size = 0.1
+particlesMaterial.size = 0.15
 particlesMaterial.sizeAttenuation = true
 
 particlesMaterial.color = new THREE.Color("#ff88cc")
@@ -131,8 +159,33 @@ fontLoader.load("/fonts/helvetiker_regular.typeface.json", (font) => {
   })
   textGeometry.center()
 
-  const text = new THREE.Mesh(textGeometry, textMat)
-  scene.add(text)
+  const text1 = new THREE.Mesh(textGeometry, textMat)
+  scene.add(text1)
+
+  const textGeometry2 = new TextGeometry("About", {
+    font: font,
+    size: 0.2,
+    height: 0.2,
+    curveSegments: 12,
+    bevelEnabled: true,
+    bevelThickness: 0.03,
+    bevelSize: 0.02,
+    bevelOffset: 0,
+    bevelSegments: 5,
+  })
+  textGeometry.center()
+
+  const text2 = new THREE.Mesh(textGeometry2, textMat)
+  text2.position.x = -1.79
+  text2.position.y = -0.27
+  text2.position.z = -0.17
+  text2.rotation.y = 4.5
+  scene.add(text2)
+  gui.add(text2.position, "x", -5, 5, 0.01).name("About pos x")
+  gui.add(text2.position, "y", -5, 5, 0.01).name("About pos y")
+  gui.add(text2.position, "z", -5, 5, 0.01).name("About pos z")
+  gui.add(text2.rotation, "x", -5, 5, 0.01).name("About rot x")
+  gui.add(text2.rotation, "y", -5, 5, 0.01).name("About rot y")
 
   // Donuts
   // const donutGeometry = new THREE.TorusGeometry(0.3, 0.2, 32, 64)
@@ -223,6 +276,30 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
  */
 
 const clock = new THREE.Clock()
+// const mouse = new THREE.Vector2()
+
+// window.addEventListener("mousemove", (event) => {
+//   mouse.x = (event.clientX / sizes.width) * 2 - 1
+//   mouse.y = -(event.clientY / sizes.height) * 2 + 1
+// })
+
+// window.addEventListener("click", () => {
+//   if (currentIntersect) {
+//     switch (currentIntersect.object) {
+//       case object1:
+//         console.log("click on object 1")
+//         break
+
+//       case object2:
+//         console.log("click on object 2")
+//         break
+
+//       case object3:
+//         console.log("click on object 3")
+//         break
+//     }
+//   }
+// })
 
 const tick = () => {
   const elapsedTime = clock.getElapsedTime()
@@ -233,6 +310,25 @@ const tick = () => {
   // cube2.rotation.y = 1 * elapsedTime
 
   // cube3.rotation.y = 1 * elapsedTime;
+  // Cast a ray from the mouse and handle events
+  // raycaster.setFromCamera(mouse, camera)
+
+  // const objectsToTest = [object1, object2, object3]
+  // const intersects = raycaster.intersectObjects(objectsToTest)
+
+  // if (intersects.length) {
+  //   if (!currentIntersect) {
+  //     console.log("mouse enter")
+  //   }
+
+  //   currentIntersect = intersects[0]
+  // } else {
+  //   if (currentIntersect) {
+  //     console.log("mouse leave")
+  //   }
+
+  //   currentIntersect = null
+  // }
 
   // Update Orbital Controls
   // controls.update()
