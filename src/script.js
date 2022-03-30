@@ -107,7 +107,7 @@ const positions = new Float32Array(count * 3)
 const colors = new Float32Array(count * 3)
 
 for (let i = 0; i < count * 3; i++) {
-  positions[i] = (Math.random() - 0.5) * 10
+  positions[i] = (Math.random() - 0.5) * 25
   colors[i] = Math.random()
 }
 
@@ -141,14 +141,15 @@ scene.add(particles)
  * Fonts
  */
 const fontLoader = new FontLoader()
-
+let aboutText
+let textGeometry2
 fontLoader.load("/fonts/helvetiker_regular.typeface.json", (font) => {
   const textMat = new THREE.MeshMatcapMaterial({ matcap: textTexture })
 
   // Text
   const textGeometry = new TextGeometry("Kawika Mendiola", {
     font: font,
-    size: 0.5,
+    size: 0.8,
     height: 0.2,
     curveSegments: 12,
     bevelEnabled: true,
@@ -162,31 +163,31 @@ fontLoader.load("/fonts/helvetiker_regular.typeface.json", (font) => {
   const text1 = new THREE.Mesh(textGeometry, textMat)
   scene.add(text1)
 
-  const textGeometry2 = new TextGeometry("About", {
+  textGeometry2 = new TextGeometry("About", {
     font: font,
-    size: 0.2,
+    size: 0.3,
     height: 0.2,
     curveSegments: 12,
     bevelEnabled: true,
     bevelThickness: 0.03,
-    bevelSize: 0.02,
+    bevelSize: 0.002,
     bevelOffset: 0,
     bevelSegments: 5,
   })
   textGeometry.center()
 
-  const text2 = new THREE.Mesh(textGeometry2, textMat)
-  text2.position.x = -1.79
-  text2.position.y = -0.27
-  text2.position.z = -0.17
-  text2.rotation.y = 4.5
-  scene.add(text2)
-  gui.add(text2.position, "x", -5, 5, 0.01).name("About pos x")
-  gui.add(text2.position, "y", -5, 5, 0.01).name("About pos y")
-  gui.add(text2.position, "z", -5, 5, 0.01).name("About pos z")
-  gui.add(text2.rotation, "x", -5, 5, 0.01).name("About rot x")
-  gui.add(text2.rotation, "y", -5, 5, 0.01).name("About rot y")
-
+  aboutText = new THREE.Mesh(textGeometry2, textMat)
+  aboutText.position.x = -3.07
+  aboutText.position.y = -0.9
+  aboutText.position.z = 0.18
+  aboutText.rotation.y = 0.18
+  scene.add(aboutText)
+  gui.add(aboutText.position, "x", -5, 5, 0.01).name("About pos x")
+  gui.add(aboutText.position, "y", -5, 5, 0.01).name("About pos y")
+  gui.add(aboutText.position, "z", -5, 5, 0.01).name("About pos z")
+  gui.add(aboutText.rotation, "x", -5, 5, 0.01).name("About rot x")
+  gui.add(aboutText.rotation, "y", -5, 5, 0.01).name("About rot y")
+  console.log(aboutText)
   // Donuts
   // const donutGeometry = new THREE.TorusGeometry(0.3, 0.2, 32, 64)
   // const donutMat = new THREE.MeshMatcapMaterial({ matcap: donutTexture })
@@ -205,7 +206,6 @@ fontLoader.load("/fonts/helvetiker_regular.typeface.json", (font) => {
 /**
  * Lights
  */
-
 const pointLight = new THREE.PointLight(0xffffff, 0.1)
 pointLight.position.x = 2
 pointLight.position.y = 3
@@ -303,7 +303,6 @@ const clock = new THREE.Clock()
 
 const tick = () => {
   const elapsedTime = clock.getElapsedTime()
-
   // Update objects
   // cube.rotation.y = 1 * elapsedTime
 
