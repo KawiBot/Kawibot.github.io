@@ -68,6 +68,48 @@ const textTexture = textureLoader.load("/matcaps/3.png")
 // gui.add(plane.rotation, "x").min(0).max(15).step(0.1)
 
 /**
+ * Particles
+ */
+// Geometry
+const particleTexture = textureLoader.load("/particles/9.png")
+const particlesGeometry = new THREE.BufferGeometry()
+const count = 5000
+
+const positions = new Float32Array(count * 3)
+const colors = new Float32Array(count * 3)
+
+for (let i = 0; i < count * 3; i++) {
+  positions[i] = (Math.random() - 0.5) * 30
+  colors[i] = Math.random()
+}
+
+particlesGeometry.setAttribute(
+  "position",
+  new THREE.BufferAttribute(positions, 3)
+)
+particlesGeometry.setAttribute("color", new THREE.BufferAttribute(colors, 3))
+
+// Material
+const particlesMaterial = new THREE.PointsMaterial()
+
+particlesMaterial.size = 0.1
+particlesMaterial.sizeAttenuation = true
+
+particlesMaterial.color = new THREE.Color("#ff88cc")
+
+particlesMaterial.transparent = true
+particlesMaterial.alphaMap = particleTexture
+// particlesMaterial.alphaTest = 0.01
+// particlesMaterial.depthTest = false
+particlesMaterial.depthWrite = false
+particlesMaterial.blending = THREE.AdditiveBlending
+
+particlesMaterial.vertexColors = true
+
+// Points
+const particles = new THREE.Points(particlesGeometry, particlesMaterial)
+scene.add(particles)
+/**
  * Fonts
  */
 const fontLoader = new FontLoader()
@@ -93,19 +135,19 @@ fontLoader.load("/fonts/helvetiker_regular.typeface.json", (font) => {
   scene.add(text)
 
   // Donuts
-  const donutGeometry = new THREE.TorusGeometry(0.3, 0.2, 32, 64)
-  const donutMat = new THREE.MeshMatcapMaterial({ matcap: donutTexture })
-  for (let i = 0; i < 1000; i++) {
-    const donut = new THREE.Mesh(donutGeometry, donutMat)
-    donut.position.x = (Math.random() - 0.5) * 20
-    donut.position.y = (Math.random() - 0.5) * 20
-    donut.position.z = (Math.random() - 0.5) * 20
-    donut.rotation.x = Math.random() * Math.PI
-    donut.rotation.y = Math.random() * Math.PI
-    const scale = Math.random()
-    donut.scale.set(scale, scale, scale)
-    scene.add(donut)
-  }
+  // const donutGeometry = new THREE.TorusGeometry(0.3, 0.2, 32, 64)
+  // const donutMat = new THREE.MeshMatcapMaterial({ matcap: donutTexture })
+  // for (let i = 0; i < 1000; i++) {
+  //   const donut = new THREE.Mesh(donutGeometry, donutMat)
+  //   donut.position.x = (Math.random() - 0.5) * 20
+  //   donut.position.y = (Math.random() - 0.5) * 20
+  //   donut.position.z = (Math.random() - 0.5) * 20
+  //   donut.rotation.x = Math.random() * Math.PI
+  //   donut.rotation.y = Math.random() * Math.PI
+  //   const scale = Math.random()
+  //   donut.scale.set(scale, scale, scale)
+  //   scene.add(donut)
+  // }
 })
 /**
  * Lights
@@ -153,8 +195,8 @@ const camera = new THREE.PerspectiveCamera(
   100
 )
 
-camera.position.y = 2
-camera.position.z = 3
+camera.position.y = 0
+camera.position.z = 3.9
 gui.add(camera.position, "x", 0, 10, 0.1).name("cam pos x")
 gui.add(camera.position, "y", 0, 10, 0.1).name("cam pos y")
 gui.add(camera.position, "z", 0, 10, 0.1).name("cam pos z")
