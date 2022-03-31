@@ -140,9 +140,11 @@ scene.add(particles)
 /**
  * Fonts
  */
+const textObj = {
+  text1: null,
+  aboutText: null,
+}
 const fontLoader = new FontLoader()
-let aboutText
-let textGeometry2
 fontLoader.load("/fonts/helvetiker_regular.typeface.json", (font) => {
   const textMat = new THREE.MeshMatcapMaterial({ matcap: textTexture })
 
@@ -163,7 +165,7 @@ fontLoader.load("/fonts/helvetiker_regular.typeface.json", (font) => {
   const text1 = new THREE.Mesh(textGeometry, textMat)
   scene.add(text1)
 
-  textGeometry2 = new TextGeometry("About", {
+  const textGeometry2 = new TextGeometry("About", {
     font: font,
     size: 0.3,
     height: 0.2,
@@ -176,7 +178,7 @@ fontLoader.load("/fonts/helvetiker_regular.typeface.json", (font) => {
   })
   textGeometry.center()
 
-  aboutText = new THREE.Mesh(textGeometry2, textMat)
+  const aboutText = new THREE.Mesh(textGeometry2, textMat)
   aboutText.position.x = -3.07
   aboutText.position.y = -0.9
   aboutText.position.z = 0.18
