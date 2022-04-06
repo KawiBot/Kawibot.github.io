@@ -1,4 +1,3 @@
-import "./css/cursor.min.css"
 import "./css/style.min.css"
 import gsap from "gsap"
 import * as THREE from "three"
@@ -7,12 +6,22 @@ import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js"
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js"
 import typefaceFont from "three/examples/fonts/helvetiker_regular.typeface.json"
 import * as dat from "dat.gui"
+/**
+ * Debug
+ */
+const gui = new dat.GUI({
+  hideable: true,
+  // closed: true,
+})
+// gui.hide()
 
-const gui = new dat.GUI()
+/**
+ * Params
+ */
+
 const parameters = {
   materialColor: "#ffeded",
 }
-
 gui.addColor(parameters, "materialColor").onChange(() => {
   particlesMaterial.color.set(parameters.materialColor)
   material.color.set(parameters.materialColor)
@@ -43,28 +52,36 @@ const material = new THREE.MeshToonMaterial({
 /**
  * Meshes
  */
-const objectsDistance = 4
+const objectsDistance = 5
 const mesh1 = new THREE.Mesh(new THREE.TorusGeometry(1, 0.4, 16, 60), material)
-const mesh2 = new THREE.Mesh(new THREE.ConeGeometry(1, 2, 32), material)
+const mesh2 = new THREE.Mesh(new THREE.TorusGeometry(1, 0.4, 16, 3), material)
 const mesh3 = new THREE.Mesh(
   new THREE.TorusKnotGeometry(0.8, 0.35, 100, 16),
   material
 )
+const mesh4 = new THREE.Mesh(new THREE.TetrahedronGeometry(1, 0), material)
 mesh1.position.y = -objectsDistance * 0
 mesh2.position.y = -objectsDistance * 1
 mesh3.position.y = -objectsDistance * 2
+mesh4.position.y = -objectsDistance * 3
 
 mesh1.position.x = 2
 mesh2.position.x = -2
 mesh3.position.x = 2
-scene.add(mesh1, mesh2, mesh3)
+mesh4.position.x = -2
+// Debug meshes
+// Mesh1
+// gui.add(mesh1.scale, "x", 0.01, 1, 0.01)
+// gui.add(mesh1.scale, "y", 0.4, 1, 0.01)
+// gui.add(mesh1.scale, "z", 0.01, 1, 0.01)
 
-const sectionMeshes = [mesh1, mesh2, mesh3]
+scene.add(mesh1, mesh2, mesh3, mesh4)
+
+const sectionMeshes = [mesh1, mesh2, mesh3, mesh4]
 
 /**
  * Particles
  */
-
 // Geometry
 const particlesCount = 200
 const positions = new Float32Array(particlesCount * 3)
@@ -166,16 +183,15 @@ window.addEventListener("scroll", () => {
   if (newSection != currentSection) {
     currentSection = newSection
 
-    gsap.to(sectionMeshes[currentSection].rotation, {
-      duration: 1.5,
-      ease: "power2.inOut",
-      x: "+=6",
-      y: "+=3",
-      z: "+=1.5",
-    })
+    // gsap.to(sectionMeshes[currentSection].rotation, {
+    //   duration: 1.5,
+    //   ease: "power2.inOut",
+    //   x: "+=6",
+    //   y: "+=3",
+    //   z: "+=1.5",
+    // })
   }
 })
-
 /**
  * Cursor
  */
@@ -183,16 +199,52 @@ const cursor = {
   x: 0,
   y: 0,
 }
+const mouse = new THREE.Vector2()
+window.addEventListener("click", () => {
+  if (currentIntersect) {
+    gsap.to(sectionMeshes[currentSection].rotation, {
+      duration: 1.5,
+      ease: "power2.inOut",
+      x: "+=6",
+      y: "+=3",
+      z: "+=1.5",
+    })
+    // switch (currentIntersect.object) {
+    //   case mesh1:
+    //     console.log("click on object 1")
+    //     break
+
+    //   case mesh2:
+    //     console.log("click on object 2")
+    //     break
+    //   case mesh3:
+    //     console.log("click on object 3")
+    //     break
+    //   case mesh4:
+    //     console.log("click on object 4")
+    //     break
+    // }
+  }
+})
 window.addEventListener("mousemove", (e) => {
   cursor.x = e.clientX / sizes.width - 0.5
   cursor.y = e.clientY / sizes.height - 0.5
+
+  mouse.x = (e.clientX / sizes.width) * 2 - 1
+  mouse.y = (e.clientY / sizes.height) * 2 - 1
 })
 
+/**
+ * Raycaster
+ */
+const raycaster = new THREE.Raycaster()
+let currentIntersect = null
 /**
  * Animate
  */
 const clock = new THREE.Clock()
 let previousTime = 0
+// Game loop
 const tick = () => {
   const elapsedTime = clock.getElapsedTime()
   const deltaTime = elapsedTime - previousTime
@@ -212,6 +264,23 @@ const tick = () => {
     mesh.rotation.y += deltaTime * 0.12
   }
 
+  // Raycast from mouse
+  raycaster.setFromCamera(mouse, camera)
+  const objects = [mesh1, mesh2, mesh3, mesh4]
+  const intersects = raycaster.intersectObjects(objects)
+  if (intersects.length) {
+    if (!currentIntersect) {
+      // console.log("mouse enter")
+    }
+
+    currentIntersect = intersects[0]
+  } else {
+    if (currentIntersect) {
+      // console.log("mouse leave")
+    }
+
+    currentIntersect = null
+  }
   // Animate particles
   particles.rotation.y = 0.02 * elapsedTime
   // Render
@@ -223,27 +292,27 @@ const tick = () => {
 
 tick()
 // Circle cursor
-const $bigBall = document.querySelector(".cursor__ball--big")
-const $smallBall = document.querySelector(".cursor__ball--small")
-const $hoverables = document.querySelectorAll(".hoverable")
+// const $bigBall = document.querySelector(".cursor__ball--big")
+// const $smallBall = document.querySelector(".cursor__ball--small")
+// const $hoverables = document.querySelectorAll(".hoverable")
 
-// Listeners
-document.body.addEventListener("mousemove", onMouseMove)
-for (let i = 0; i < $hoverables.length; i++) {
-  $hoverables[i].addEventListener("mouseenter", onMouseHover)
-  $hoverables[i].addEventListener("mouseleave", onMouseHoverOut)
-}
+// // Listeners
+// document.body.addEventListener("mousemove", onMouseMove)
+// for (let i = 0; i < $hoverables.length; i++) {
+//   $hoverables[i].addEventListener("mouseenter", onMouseHover)
+//   $hoverables[i].addEventListener("mouseleave", onMouseHoverOut)
+// }
 
-// Move the cursor
-function onMouseMove(e) {
-  gsap.to($bigBall, { duration: 0.17, x: e.pageX - 15, y: e.pageY - 15 })
-  gsap.to($smallBall, { duration: 0.1, x: e.pageX - 5, y: e.pageY - 7 })
-}
+// // Move the cursor
+// function onMouseMove(e) {
+//   gsap.to($bigBall, { duration: 0.17, x: e.pageX - 15, y: e.pageY - 15 })
+//   gsap.to($smallBall, { duration: 0.1, x: e.pageX - 5, y: e.pageY - 7 })
+// }
 
-// Hover an element
-function onMouseHover() {
-  gsap.to($bigBall, { duration: 0.3, scale: 4 })
-}
-function onMouseHoverOut() {
-  gsap.to($bigBall, { duration: 0.3, scale: 1 })
-}
+// // Hover an element
+// function onMouseHover() {
+//   gsap.to($bigBall, { duration: 0.3, scale: 4 })
+// }
+// function onMouseHoverOut() {
+//   gsap.to($bigBall, { duration: 0.3, scale: 1 })
+// }
