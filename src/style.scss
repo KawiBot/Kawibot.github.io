@@ -2,10 +2,19 @@
   margin: 0;
   padding: 0;
 }
+// html, body {
+//   overflow: hidden;
+// }
 body {
   font-family: Arial, Helvetica, sans-serif;
   background-color: rgb(0, 0, 0);
   color: aliceblue;
+  // .hint {
+  //   display: flex;
+  //   align-items: center;
+  //   height: 35vh;
+  //   position: absolute;
+  // }
   .section {
     display: flex;
     align-items: center;

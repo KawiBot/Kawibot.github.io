@@ -60,15 +60,12 @@ const mesh3 = new THREE.Mesh(
   material
 )
 const mesh4 = new THREE.Mesh(new THREE.TetrahedronGeometry(1, 0), material)
+// Spacing out the meshes
 mesh1.position.y = -objectsDistance * 0
 mesh2.position.y = -objectsDistance * 1
 mesh3.position.y = -objectsDistance * 2
 mesh4.position.y = -objectsDistance * 3
 
-mesh1.position.x = 2
-mesh2.position.x = -2
-mesh3.position.x = 2
-mesh4.position.x = -2
 // Debug meshes
 // Mesh1
 // gui.add(mesh1.scale, "x", 0.01, 1, 0.01)
@@ -121,6 +118,7 @@ scene.add(particles)
 const sun = new THREE.DirectionalLight("#ffffff", 1)
 sun.position.set(1, 1, 0)
 scene.add(sun)
+
 /**
  * Sizes
  */
@@ -128,6 +126,27 @@ const sizes = {
   width: window.innerWidth,
   height: window.innerHeight,
 }
+
+/**
+ * Camera
+ */
+// Camera Group NOTE: We put the camera into its own group since it is constantly rotating in tick(), but when we click it we want it to rotate quickly for a set amount of time with gsap. Putting it into a group allows us to attain that feature.
+const cameraGroup = new THREE.Group()
+
+scene.add(cameraGroup)
+// Base camera
+const camera = new THREE.PerspectiveCamera(
+  35,
+  sizes.width / sizes.height,
+  0.1,
+  100
+)
+
+camera.position.z = 6
+
+cameraGroup.add(camera)
+
+scene.add(cameraGroup)
 
 window.addEventListener("resize", () => {
   // Update sizes
@@ -137,28 +156,37 @@ window.addEventListener("resize", () => {
   // Update camera
   camera.aspect = sizes.width / sizes.height
   camera.updateProjectionMatrix()
+  if (sizes.width < 995) {
+    console.log(sizes.width, sizes.height)
+    // Placing them from left to right
+    mesh1.position.x = 0
+    mesh2.position.x = 0
+    mesh3.position.x = 0
+    mesh4.position.x = 0
+  } else {
+    mesh1.position.x = 2
+    mesh2.position.x = -2
+    mesh3.position.x = 2
+    mesh4.position.x = -2
+  }
 
   // Update renderer
   renderer.setSize(sizes.width, sizes.height)
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 })
-
-/**
- * Camera
- */
-// Group
-const cameraGroup = new THREE.Group()
-scene.add(cameraGroup)
-// Base camera
-const camera = new THREE.PerspectiveCamera(
-  35,
-  sizes.width / sizes.height,
-  0.1,
-  100
-)
-camera.position.z = 6
-cameraGroup.add(camera)
-scene.add(cameraGroup)
+// Moving meshes to proper place depending on size
+// Placing them from left to right
+if (sizes.width < 995) {
+  mesh1.position.x = 0
+  mesh2.position.x = 0
+  mesh3.position.x = 0
+  mesh4.position.x = 0
+} else {
+  mesh1.position.x = 2
+  mesh2.position.x = -2
+  mesh3.position.x = 2
+  mesh4.position.x = -2
+}
 
 /**
  * Renderer
@@ -200,6 +228,7 @@ const cursor = {
   y: 0,
 }
 const mouse = new THREE.Vector2()
+
 window.addEventListener("click", () => {
   if (currentIntersect) {
     gsap.to(sectionMeshes[currentSection].rotation, {
@@ -270,9 +299,8 @@ const tick = () => {
   const intersects = raycaster.intersectObjects(objects)
   if (intersects.length) {
     if (!currentIntersect) {
-      // console.log("mouse enter")
+      console.log("mouse enter")
     }
-
     currentIntersect = intersects[0]
   } else {
     if (currentIntersect) {
