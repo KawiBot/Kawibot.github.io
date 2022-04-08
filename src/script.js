@@ -11,9 +11,9 @@ import * as dat from "dat.gui"
  */
 const gui = new dat.GUI({
   hideable: true,
-  // closed: true,
+  closed: true,
 })
-// gui.hide()
+gui.hide()
 
 /**
  * Params
