@@ -21,6 +21,7 @@ gui.hide()
 
 const parameters = {
   materialColor: "#ffeded",
+  material2Color: "#be1825",
 }
 gui.addColor(parameters, "materialColor").onChange(() => {
   particlesMaterial.color.set(parameters.materialColor)
@@ -49,10 +50,14 @@ const material = new THREE.MeshToonMaterial({
   color: parameters.materialColor,
   gradientMap: gradientTexture,
 })
+const material2 = new THREE.MeshToonMaterial({
+  color: parameters.material2Color,
+  gradientMap: gradientTexture,
+})
 /**
  * Meshes
  */
-const objectsDistance = 5
+const objectsDistance = 6
 const mesh1 = new THREE.Mesh(new THREE.TorusGeometry(1, 0.4, 16, 60), material)
 const mesh2 = new THREE.Mesh(new THREE.TorusGeometry(1, 0.4, 16, 3), material)
 const mesh3 = new THREE.Mesh(
@@ -60,11 +65,26 @@ const mesh3 = new THREE.Mesh(
   material
 )
 const mesh4 = new THREE.Mesh(new THREE.TetrahedronGeometry(1, 0), material)
+const mesh5 = new THREE.Mesh(
+  new THREE.CapsuleGeometry(0.2, 0.5, 10, 20),
+  material2
+)
+const mesh6 = new THREE.Mesh(
+  new THREE.CapsuleGeometry(0.2, 0.5, 10, 20),
+  material2
+)
+const mesh7 = new THREE.Mesh(
+  new THREE.CapsuleGeometry(0.2, 0.5, 10, 20),
+  material2
+)
 // Spacing out the meshes
 mesh1.position.y = -objectsDistance * 0
 mesh2.position.y = -objectsDistance * 1
 mesh3.position.y = -objectsDistance * 2
 mesh4.position.y = -objectsDistance * 3
+mesh5.position.y = -objectsDistance * 3.8
+mesh6.position.y = -objectsDistance * 3.8
+mesh7.position.y = -objectsDistance * 3.8
 
 // Debug meshes
 // Mesh1
@@ -72,15 +92,15 @@ mesh4.position.y = -objectsDistance * 3
 // gui.add(mesh1.scale, "y", 0.4, 1, 0.01)
 // gui.add(mesh1.scale, "z", 0.01, 1, 0.01)
 
-scene.add(mesh1, mesh2, mesh3, mesh4)
+scene.add(mesh1, mesh2, mesh3, mesh4, mesh5, mesh6, mesh7)
 
-const sectionMeshes = [mesh1, mesh2, mesh3, mesh4]
+const sectionMeshes = [mesh1, mesh2, mesh3, mesh4, mesh5, mesh6, mesh7]
 
 /**
  * Particles
  */
 // Geometry
-const particlesCount = 200
+const particlesCount = 500
 const positions = new Float32Array(particlesCount * 3)
 
 for (let i = 0; i < particlesCount; i++) {
@@ -181,11 +201,18 @@ if (sizes.width < 995) {
   mesh2.position.x = 0
   mesh3.position.x = 0
   mesh4.position.x = 0
+  mesh5.position.x = 0
+  mesh6.position.x = 0
+  mesh7.position.x = 0
 } else {
   mesh1.position.x = 2
   mesh2.position.x = -2
   mesh3.position.x = 2
   mesh4.position.x = -2
+  // Capsules
+  mesh5.position.x = -2
+  mesh6.position.x = 0
+  mesh7.position.x = 2
 }
 
 /**
