@@ -2,10 +2,23 @@ import "./css/style.min.css"
 import gsap from "gsap"
 import * as THREE from "three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js"
-import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js"
-import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js"
-import typefaceFont from "three/examples/fonts/helvetiker_regular.typeface.json"
-import * as dat from "dat.gui"
+import dat from "dat.gui"
+// Selectors
+const projects = document.querySelector(".projects")
+const contact = document.querySelector(".contact")
+const contactTitle = document.querySelector(".contact-title")
+const certificates = document.querySelector(".certificates")
+
+const reactImg = "/certificates/react.jpg"
+const htmlImg = "/certificates/html.jpg"
+const jsImg = "/certificates/js.jpg"
+certificates.innerHTML = `
+<h1>Certificates</h1>
+<ul class="certificate-images">
+<li><img src="${reactImg}" /></li>
+<li><img src="${htmlImg}" /></li>
+<li><img src="${jsImg}" /></li>
+</ul>`
 /**
  * Debug
  */
@@ -65,6 +78,7 @@ const mesh3 = new THREE.Mesh(
   material
 )
 const mesh4 = new THREE.Mesh(new THREE.TetrahedronGeometry(1, 0), material)
+// Capsule Meshes
 const mesh5 = new THREE.Mesh(
   new THREE.CapsuleGeometry(0.2, 0.5, 10, 20),
   material2
@@ -77,6 +91,13 @@ const mesh7 = new THREE.Mesh(
   new THREE.CapsuleGeometry(0.2, 0.5, 10, 20),
   material2
 )
+// const capsuleShape = new CANNON.Cylinder(0.2, 0.2, 10)
+// const capsuleBody = new CANNON.Body({
+//   mass: 1,
+//   position: new CANNON.Vec3(0, 3, 0),
+//   shape: capsuleShape,
+// })
+// world.addBody(capsuleBody)
 // Spacing out the meshes
 mesh1.position.y = -objectsDistance * 0
 mesh2.position.y = -objectsDistance * 1
@@ -95,7 +116,6 @@ mesh7.position.y = -objectsDistance * 3.8
 scene.add(mesh1, mesh2, mesh3, mesh4, mesh5, mesh6, mesh7)
 
 const sectionMeshes = [mesh1, mesh2, mesh3, mesh4, mesh5, mesh6, mesh7]
-
 /**
  * Particles
  */
@@ -163,9 +183,7 @@ const camera = new THREE.PerspectiveCamera(
 )
 
 camera.position.z = 6
-
 cameraGroup.add(camera)
-
 scene.add(cameraGroup)
 
 window.addEventListener("resize", () => {
@@ -258,6 +276,19 @@ const mouse = new THREE.Vector2()
 
 window.addEventListener("click", () => {
   if (currentIntersect) {
+    if (currentSection === 1) {
+      // TODO: Add to local storage.
+      projects.style.display = "flex"
+      document.querySelector(".projects").scrollIntoView({ behavior: "auto" })
+    } else if (currentSection === 2) {
+      contact.style.display = "inline"
+      contactTitle.style.display = "none"
+    } else if (currentSection === 3) {
+      certificates.style.display = "flex"
+      document
+        .querySelector(".certificates")
+        .scrollIntoView({ behavior: "auto" })
+    }
     gsap.to(sectionMeshes[currentSection].rotation, {
       duration: 1.5,
       ease: "power2.inOut",
@@ -326,12 +357,14 @@ const tick = () => {
   const intersects = raycaster.intersectObjects(objects)
   if (intersects.length) {
     if (!currentIntersect) {
-      console.log("mouse enter")
+      // console.log("mouse enter")
+      material.color.set("#be1825")
     }
     currentIntersect = intersects[0]
   } else {
     if (currentIntersect) {
       // console.log("mouse leave")
+      material.color.set("#ffeded")
     }
 
     currentIntersect = null

@@ -9,6 +9,16 @@ body {
   color: aliceblue;
 }
 
+body a {
+  text-decoration: none;
+  color: #be1825;
+  font-size: 2vmin;
+}
+
+body a:hover {
+  color: #ff2437;
+}
+
 body .section {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -30,10 +40,13 @@ body .section:nth-child(odd) {
           justify-content: flex-end;
 }
 
+body .contact {
+  display: none;
+  font-size: 2.1vmin;
+}
+
 body .projects {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  display: none;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -72,14 +85,41 @@ body .projects ul li {
   background-color: rgba(51, 51, 51, 0.3);
 }
 
-body .projects ul li a {
-  text-decoration: none;
-  color: #be1825;
-  font-size: 2vmin;
+body .certificates {
+  display: none;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: 100vh;
 }
 
-body .projects ul li a:hover {
-  color: #ff2437;
+body .certificates ul {
+  list-style-type: none;
+}
+
+body .certificates .certificate-images {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 75%;
+}
+
+body .certificates img {
+  height: 100%;
+  width: 100%;
 }
 
 body .webgl {
